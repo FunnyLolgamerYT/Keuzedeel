@@ -391,6 +391,16 @@ function story(aName)
 		createButton("exit", "Goodbye");
 	end
 
+	if(aName == "shhh") then
+		CLS();
+		playSound("soda.wav")
+		setBackground("Joebiden.JPG")
+		createTextfield("Oooh, you haves stumbled upon a grave error...                                          SODAAAAAAAA!!!!")
+		createButton("1-4", "Go back")
+
+	end
+
+
 	--MAZE END
 	
 	if(aName == "group") then
