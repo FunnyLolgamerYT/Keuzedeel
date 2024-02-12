@@ -7,6 +7,7 @@ CLS(); clears the screen.
 exitGame(); exits the game.
 playSound(string path to sound)
 ]]--
+konamiSecret = 0;
 movesleft = 15;
 currentlocation = start;
 hasKeyCard = false;
@@ -22,15 +23,25 @@ function story(aName)
 		setBackground("wakeup.JPG")
 		createTextfield("You wake up on some kind of straw bed, as you look around you find yourself in a dimly lit room, with stone walls and ceiling, as you look around you see a door, leading to another room.")
 		createButton("entrance", "Go through the door.")
+		if(konamiSecret < 4 and konamiSecret > 1) then 
+			konamiSecret = konamiSecret + 1;
+			
+		else 
+			konamiSecret = 0;
+		end
 	end
 	if(aName == "entrance") then
 		playSound("footstep.wav")
 		CLS();
 		setBackground("big-room.JPG");
-		createTextfield("You find yourself in a bigger room, you see a stone door in the wall, a group of of other people in the corner, and a shadowy figure in the corne.r")
+		createTextfield("You find yourself in a bigger room, you see a stone door in the wall, to the right a group of of other people in the corner, and to the left a shadowy figure in the corner")
 		createButton("door", "Go check out the door.");
 		createButton("group", "Try to talk to the others.")
 		createButton("weirdo", "Try to talk to the weirdo.")
+		createButton("start", "Go back")
+		if(konamiSecret == 8) then
+			createButton("konamiSecret", "Secret")
+		end
 	end
 	if(aName == "door") then
 		playSound("footstep.wav")
@@ -40,6 +51,12 @@ function story(aName)
 		createButton("entrance", "Go back to the corridor.");
 		if(hasKeyCard == true) then
 			createButton("doorOpened", "Unlock the door.")
+		end
+		if(konamiSecret < 2) then
+			konamiSecret = konamiSecret + 1;
+
+		else 
+			konamiSecret = 0;
 		end
 	end
 
@@ -192,7 +209,7 @@ function story(aName)
 		movesleft = movesleft - 1;
 		createTextfield(movesleft);
 		currentlocation = "6-5";
-		createButton("Exit", "Go through the exit!");
+		createButton("escape", "Go through the exit!");
 		createButton("6-4", "Go south")
 		createButton("map", "Open the map")
 
@@ -378,12 +395,13 @@ function story(aName)
 
 	end
 	if(movesleft <= 0) then
+		setBackground("breederDeath.JPG")
 		CLS();
 		createTextfield("The breeder has caught you! You are dead.")
 		createButton("exit", "die");
 	end
 
-	if(aName == "exit") then
+	if(aName == "escape") then
 		CLS();
 		setBackground("escaped.JPG");
 		createTextfield("You have escaped, congratultions!")
@@ -413,6 +431,13 @@ function story(aName)
 			createButton("groupInteraction2", "Tell me what you know")
 		else
 		createButton("groupInteraction1", "Talk to them")
+		end
+		if(konamiSecret == 5 or konamiSecret == 7) then
+			konamiSecret = konamiSecret + 1;
+	
+		else
+			konamiSecret = 0;
+			
 		end
 	end
 
@@ -468,6 +493,11 @@ function story(aName)
 		createTextfield("Hey kiddo, come here!");
 		createButton("weirdo1", "approach the weirdo");
 		createButton("entrance", "Get out of there");
+		if(konamiSecret == 4 or konamiSecret == 6) then
+			konamiSecret = konamiSecret + 1;
+		else
+			konamiSecret = 0;
+		end
 
 	end 
 	if (aName == "weirdo" and gotSpecialFood == true) then
